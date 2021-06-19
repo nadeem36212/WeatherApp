@@ -20,9 +20,9 @@ class XHR {
     options.headers = headers ? headers : XHR.defaultHeaders();
 
     let finalUrl = BASE_URL + url;
-    console.log(BASE_URL, url, params);
+    console.log('final url is', BASE_URL, url, params);
 
-    return fetch(finalUrl, options)
+    return fetch(finalUrl)
       .then(res => res.json())
       .then(json => {
         return json;

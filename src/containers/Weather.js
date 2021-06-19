@@ -1,6 +1,12 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
 import {WeatherList} from '@components';
+import {actions} from '@actions';
 
 const DATA = [
   {
@@ -37,19 +43,38 @@ const DATA = [
 
 export function Weather(props) {
   const {navigation} = props;
+  const [isLoading, setIsLoading] = useState(true);
+  const [citiesList, setCitiesList] = useState([]);
+
+  useEffect(() => {
+    doAPICall();
+  }, []);
+  const doAPICall = async () => {
+    const res = await actions.getCities({});
+    if (res.cod === '200') {
+      setCitiesList(res.list);
+    }
+    setIsLoading(false);
+    console.log('getCitiesAPICall res is-------------=-', res);
+  };
   const onItemPress = () => {
     navigation.navigate('Map');
   };
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={({item}) => (
-          <WeatherList onItemPress={onItemPress} item={item} />
-        )}
-        keyExtractor={item => item.id}
-        style={styles.listcontainer}
-      />
+      {isLoading ? (
+        <ActivityIndicator size="small" />
+      ) : (
+        <FlatList
+          data={citiesList}
+          renderItem={({item}) => (
+            <WeatherList onItemPress={onItemPress} item={item} />
+          )}
+          keyExtractor={item => item.id}
+          style={styles.listcontainer}
+        />
+      )}
     </SafeAreaView>
   );
 }

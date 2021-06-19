@@ -3,15 +3,16 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 const WeatherList = params => {
   const {item, onItemPress} = params;
+  console.log('item is', item);
   return (
     <TouchableOpacity onPress={onItemPress} style={styles.maincontainer}>
       <View style={styles.innerContainer}>
-        <Text style={styles.cityText}>{item.city}</Text>
-        <Text style={styles.weatherText}>{item.weather}</Text>
+        <Text style={styles.cityText}>{item.name}</Text>
+        <Text style={styles.weatherText}>rain</Text>
       </View>
       <View style={styles.temContainer}>
         <Text style={styles.tempText}>
-          {item.temp}
+          {item.main.temp}
           <View style={styles.degreeContainer}>
             <Text style={styles.degreeText}>o</Text>
           </View>
