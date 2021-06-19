@@ -8,39 +8,6 @@ import {
 import {WeatherList} from '@components';
 import {actions} from '@actions';
 
-const DATA = [
-  {
-    id: '1',
-    city: 'Dkhaka',
-    weather: 'cloudy',
-    temp: '25',
-  },
-  {
-    id: '2',
-    city: 'Chitagone',
-    weather: 'Sunny',
-    temp: '32',
-  },
-  {
-    id: '3',
-    city: 'Lahore',
-    weather: 'sunny',
-    temp: '40',
-  },
-  {
-    id: '4',
-    city: 'Karachi',
-    weather: 'cloudy',
-    temp: '31',
-  },
-  {
-    id: '5',
-    city: 'Islamabad',
-    weather: 'sunny',
-    temp: '38',
-  },
-];
-
 export function Weather(props) {
   const {navigation} = props;
   const [isLoading, setIsLoading] = useState(true);
@@ -55,10 +22,10 @@ export function Weather(props) {
       setCitiesList(res.list);
     }
     setIsLoading(false);
-    console.log('getCitiesAPICall res is-------------=-', res);
   };
-  const onItemPress = () => {
-    navigation.navigate('Map');
+  const onItemPress = item => {
+    console.log('item is', item);
+    navigation.navigate('Map', {item});
   };
 
   return (
@@ -69,7 +36,7 @@ export function Weather(props) {
         <FlatList
           data={citiesList}
           renderItem={({item}) => (
-            <WeatherList onItemPress={onItemPress} item={item} />
+            <WeatherList onItemPress={() => onItemPress(item)} item={item} />
           )}
           keyExtractor={item => item.id}
           style={styles.listcontainer}
@@ -82,5 +49,7 @@ export function Weather(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
   },
 });

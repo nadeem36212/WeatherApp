@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 const WeatherList = params => {
   const {item, onItemPress} = params;
-  console.log('item is', item);
   return (
     <TouchableOpacity onPress={onItemPress} style={styles.maincontainer}>
       <View style={styles.innerContainer}>
